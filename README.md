@@ -33,11 +33,11 @@ The entire project uses only plain **HTML**, **CSS**, and **JavaScript** — no 
 
 1. Download or clone this repository to your computer.
 2. Open **`index.html`** in any modern web browser (Chrome, Firefox, Edge, Safari).
-3. No installation, no terminal, no server needed. You're good to go! 🎉
+3. No installation, no terminal, no server needed. You're good to go! 
 
 ---
 
-## 📁 File Structure
+##  File Structure
 
 ```text
 project-root/
