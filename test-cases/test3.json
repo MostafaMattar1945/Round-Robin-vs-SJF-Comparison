@@ -1,0 +1,19 @@
+Test 3: Invalid Input Test
+--------------------------
+Steps to reproduce:
+  1. Open index.html in a browser.
+  2. Enter Process ID: "P1", Arrival Time: 0, Burst Time: 0.
+  3. Click "Add Process".
+
+Expected result:
+  The app should display the error message:
+    "Burst Time must be greater than 0."
+  The process should NOT be added to the list.
+  No simulation should run.
+
+Additional invalid input tests to try:
+  - Leave the Process ID field empty → expect: "Process ID cannot be empty."
+  - Enter a negative Arrival Time (e.g. -1) → expect: "Arrival Time must be 0 or greater."
+  - Enter a duplicate Process ID → expect: "Process ID 'P1' is already in the list."
+  - Set Quantum to 0 and click Run Simulation → expect: "Round Robin Quantum must be a whole number of at least 1."
+  - Click "Run Simulation" with no processes added → expect: "Please add at least one process before running."
