@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>⚙️ CPU Scheduling Simulator</h1>
+  <h1> CPU Scheduling Simulator</h1>
   <h3>Round Robin vs Shortest Job First (SJF) Comparison</h3>
 </div>
 
