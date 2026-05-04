@@ -19,7 +19,7 @@
 
 <br />
 
-## 🌟 Description
+##  Description
 
 This project is a purely browser-based CPU scheduling simulator that lets you compare two classic scheduling algorithms side by side: **Round Robin (RR)** and **Preemptive Shortest Job First (SJF / SRTF)**. 
 
@@ -29,7 +29,7 @@ The entire project uses only plain **HTML**, **CSS**, and **JavaScript** — no 
 
 ---
 
-## 🚀 How to Run
+##  How to Run
 
 1. Download or clone this repository to your computer.
 2. Open **`index.html`** in any modern web browser (Chrome, Firefox, Edge, Safari).
@@ -67,16 +67,18 @@ project-root/
 
 ---
 
-## 👥 Team Members
+##  Team Members
 
-- 👤 **Member 1**: *(Your Name Here)*
-- 👤 **Member 2**: *(Your Name Here)*
-- 👤 **Member 3**: *(Your Name Here)*
-- 👤 **Member 4**: *(Your Name Here)*
+-  **Member 1**: *’Mostafa Mattar*
+-  **Member 2**: *Sama Sherif*
+-  **Member 3**: *Nagham Reda*
+-  **Member 4**: *Rana Rashad*
+-  **Member 5**: *Jowairya Ahmed*
+-  **Member 6**: *Seif El Den Tamer*
 
 ---
 
-## 🧠 Assumptions & Logic
+##  Assumptions & Logic
 
 | Assumption | Detail |
 | :--- | :--- |
@@ -88,7 +90,7 @@ project-root/
 
 ---
 
-## ⚠️ Limitations
+##  Limitations
 
 - **Browser-only**: The app runs entirely in the client's browser. There is no back-end server.
 - **No Data Persistence**: Refreshing the page clears all input. There is no save/load feature.
@@ -97,9 +99,9 @@ project-root/
 
 ---
 
-## 🧪 Test Cases
+##  Test Cases
 
-### 🟢 Test 1 — Normal Case (Quantum = 2)
+###  Test 1 — Normal Case (Quantum = 2)
 Load `test-cases/test1.json` manually:
 ```text
 P1: arrival=0, burst=5
@@ -108,7 +110,7 @@ P3: arrival=2, burst=8
 ```
 **Expected:** All three processes complete; SJF generally outperforms RR on Waiting Time.
 
-### 🟡 Test 2 — Long-job Sensitivity (Quantum = 3)
+###  Test 2 — Long-job Sensitivity (Quantum = 3)
 Load `test-cases/test2.json`:
 ```text
 P1: arrival=0, burst=20
@@ -117,10 +119,10 @@ P3: arrival=2, burst=3
 ```
 **Expected:** SJF finishes P2 and P3 very quickly (potentially starving P1), while RR gives P1 regular turns.
 
-### 🔴 Test 3 — Invalid Input
+###  Test 3 — Invalid Input
 Follow the instructions in `test-cases/test3.json` to verify that error messages appear correctly and no simulation runs on bad input.
 
 ---
 <div align="center">
-  <p>Made with ❤️ by Mostafa Mattar & Team</p>
+  <p>Made with dedication by Mostafa Mattar & Team</p>
 </div>
