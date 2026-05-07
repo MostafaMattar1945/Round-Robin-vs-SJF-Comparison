@@ -1,15 +1,4 @@
-/**
- * metrics.js
- * ----------
- * Calculates performance metrics for each process after a scheduling run.
- *
- * Definitions:
- *   Turnaround Time (TAT) = Finish Time  - Arrival Time
- *   Waiting Time    (WT)  = TAT          - Burst Time
- *   Response Time   (RT)  = First Run    - Arrival Time
- *
- * This file exports ONE function: calculateMetrics(processes, completedList)
- */
+/** metrics.js */
 
 /**
  * calculateMetrics
