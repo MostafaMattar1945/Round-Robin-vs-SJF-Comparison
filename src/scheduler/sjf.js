@@ -91,11 +91,11 @@ function runSJF(processes) {
         });
     }
 
-    var timeline   = [];  
-    var time       = 0;   
-    var done       = 0;   
-    var currentId  = null; 
-    var segStart   = 0;    
+    var timeline   = [];  // Gantt chart segments: {processId, start, end}
+    var time       = 0;   // Current clock
+    var done       = 0;   // Finished process count
+    var currentId  = null; // ID of process currently running
+    var segStart   = 0;    // When the current segment started 
 
     
     var totalBurst = 0;
