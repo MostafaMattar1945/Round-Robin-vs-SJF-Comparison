@@ -1,14 +1,14 @@
 <div align="center">
-  <h1>📊 Metrics & Visualization Team</h1>
+  <h1> Metrics & Visualization Team</h1>
   <h3>Round Robin vs SJF Simulator</h3>
 </div>
 
-## 🎯 Responsibilities
+##  Responsibilities
 - **Metrics Calculation:** Calculate the averages for Waiting, Turnaround, and Response Times.
 - **Comparison:** Build the comparison table.
 - **Visualization:** Generate the dynamic, colored Gantt charts for the results.
 
-## 📋 Requirements
+##  Requirements
 - **Calculations:**
   - `Turnaround Time = Completion Time - Arrival Time`
   - `Waiting Time = Turnaround Time - Burst Time`
