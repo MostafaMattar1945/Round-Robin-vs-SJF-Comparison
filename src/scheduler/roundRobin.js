@@ -1,19 +1,15 @@
 /**
  * roundRobin.js
- * -------------
- * Implements the Round Robin (RR) CPU scheduling algorithm.
+ * Implements the Round Robin scheduling algorithm.
  *
- * How Round Robin works:
- *   - Each process gets a fixed slice of CPU time called the "quantum".
- *   - If a process hasn't finished in one quantum, it goes to the back of the queue.
- *   - New arrivals are added to the queue in arrival order.
- *   - This repeats until all processes are done.
+ * Each process runs for a fixed time (quantum).
+ * Unfinished processes return to the queue until completed.
  *
- * This file exports ONE function: runRoundRobin(processes, quantum)
+ * Function:
+ * runRoundRobin(processes, quantum)
  */
-
 function runRoundRobin(processes, quantum) {
-    // Make a deep copy so we don't modify the original list
+    // copy processes
     var remaining = [];
     var queueLog = []; // The execution log for the Ready Queue
 
@@ -23,22 +19,22 @@ function runRoundRobin(processes, quantum) {
             arrivalTime: processes[i].arrivalTime,
             burstTime: processes[i].burstTime,
             remainingTime: processes[i].burstTime, // tracks how much is left
-            firstRunTime: -1,                      // records when it first got CPU
+            firstRunTime: -1,                      // first execution time
             finishTime: 0
         });
     }
 
-    // Sort a copy by arrival time (ties broken by original order)
+    // // sort a copy by arrival time
     remaining.sort(function(a, b) {
         return a.arrivalTime - b.arrivalTime;
     });
 
-    var timeline = [];   // Each entry: { processId, start, end }
+    var timeline = [];   // execution timeline
     var queue    = [];   // The ready queue (holds indices into 'remaining')
     var time     = 0;    // Current clock tick
     var done     = 0;    // How many processes have finished
 
-    // We'll track which processes have already been enqueued
+    // track added processes
     var enqueued = [];
     for (var j = 0; j < remaining.length; j++) {
         enqueued.push(false);
@@ -52,10 +48,10 @@ function runRoundRobin(processes, quantum) {
         }
     }
 
-    // Keep going until every process has finished
+    // repeat until all finish
     while (done < remaining.length) {
 
-        // If the queue is empty, jump time forward to the next arrival
+        // move to next arrival if queue empty
         if (queue.length === 0) {
             // Find the earliest process not yet enqueued
             var nextArrival = Infinity;
@@ -76,29 +72,29 @@ function runRoundRobin(processes, quantum) {
             }
         }
 
-        // --- NEW CODE: Record the queue state before picking a process ---
+        // save queue state 
         var queueNames = [];
         for (var q = 0; q < queue.length; q++) {
             queueNames.push(remaining[queue[q]].id);
         }
         queueLog.push("At Time " + time + " ➜ Queue: [" + queueNames.join(", ") + "]");
-        // ------------------------------------------------------------------
+        
 
         // Pick the first process in the queue
         var idx = queue.shift();
         var proc = remaining[idx];
 
-        // Record the first time this process actually runs
+        // save first run time
         if (proc.firstRunTime === -1) {
             proc.firstRunTime = time;
         }
 
-        // Determine how long it will run this turn
+        // calculate run time
         var runTime = Math.min(quantum, proc.remainingTime);
         var start   = time;
         var end     = time + runTime;
 
-        // Record this segment in the timeline
+        // add to timeline
         timeline.push({ processId: proc.id, start: start, end: end });
 
         // Update remaining time and clock
@@ -126,6 +122,6 @@ function runRoundRobin(processes, quantum) {
     return {
         timeline:  timeline,
         completed: remaining,
-        queueLog:  queueLog // <-- NEW CODE
+        queueLog:  queueLog // queue history
     };
 }
