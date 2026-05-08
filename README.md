@@ -3,7 +3,7 @@
   <h3>Round Robin vs SJF Simulator</h3>
 </div>
 
-## 🎯 Responsibilities
+## 🚀 Responsibilities
 - **Design:** Build and style the web page (HTML/CSS).
 - **Features:** Build the new SJF Mode Toggle switch (Preemptive vs Non-Preemptive).
 - **Validation:** Write the validation code to block wrong inputs like zero burst times or missing IDs.
