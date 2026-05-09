@@ -1,398 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CPU Scheduling Simulator — RR vs SJF</title>
     <meta name="description"
-          content="Interactive CPU scheduling simulator comparing Round Robin and Preemptive SJF algorithms. Enter processes, run simulation, and compare Gantt charts and metrics." />
+        content="Interactive CPU scheduling simulator comparing Round Robin and Preemptive SJF algorithms. Enter processes, run simulation, and compare Gantt charts and metrics." />
     <link rel="stylesheet" href="assets/style.css" />
 </head>
+
 <body>
 
-<!--  PAGE HEADER -->
-<header>
-    <h1> CPU Scheduling Simulator</h1>
-    <p>Round Robin vs Shortest Job First</p>
-</header>
+    <!--  PAGE HEADER -->
+    <header>
+        <h1> CPU Scheduling Simulator</h1>
+        <p>Round Robin vs Shortest Job First</p>
+    </header>
 
-<main>
+    <main>
 
-    <!--  INPUT SECTION -->
-    <div class="card" id="input-card">
-        <h2>Add Processes</h2>
+        <!--  INPUT SECTION -->
+        <div class="card" id="input-card">
+            <h2>Add Processes</h2>
 
-        <!-- Process entry form -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="input-pid">Process ID</label>
-                <input type="text" id="input-pid" placeholder="e.g. P1" maxlength="10" />
-            </div>
-            <div class="form-group">
-                <label for="input-arrival">Arrival Time</label>
-                <input type="number" id="input-arrival" placeholder="e.g. 0" min="0" />
-            </div>
-            <div class="form-group">
-                <label for="input-burst">Burst Time</label>
-                <input type="number" id="input-burst" placeholder="e.g. 5" min="1" />
-            </div>
-            <div class="form-group" style="flex: 0;">
-                <label>&nbsp;</label>
-                <button class="btn-primary" id="btn-add-process" onclick="handleAddProcess()">
-                    + Add Process
-                </button>
-            </div>
-        </div>
-
-        <!-- Error message for process fields -->
-        <div class="msg-error" id="error-process"></div>
-
-        <!-- List of added processes -->
-        <div id="process-list"></div>
-
-        <!-- LOAD TEST SCENARIOS  -->
-        <!-- butons for loading test cases data easily -->
-        <div style="margin-bottom: 1.5rem; background: #e8f0fe; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--color-primary);">
-            <p style="margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600; color: var(--color-primary-dk);">Ready test cases</p>
-            <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-                <button class="btn-reset" onclick="loadScenario1()" style="background: #fff; border-color: var(--color-primary); color: var(--color-primary);">Scenario 1</button>
-                <button class="btn-reset" onclick="loadScenario2()" style="background: #fff; border-color: var(--color-primary); color: var(--color-primary);">Scenario 2</button>
-                <button class="btn-reset" onclick="loadScenario3()" style="background: #fff; border-color: var(--color-danger); color: var(--color-danger);">Scenario 3 (Validation)</button>
-            </div>
-        </div>
-
-        <!-- Simulation Controls (Updated Layout) -->
-        <div class="simulation-controls-container">
-            
-            <!-- Top Row: Quantum (Left) and SJF Mode (Right) -->
-            <div class="settings-row">
-                <div class="form-group quantum-group">
-                    <label for="input-quantum">RR Quantum (≥ 1)</label>
-                    <input type="number" id="input-quantum" placeholder="e.g. 2" min="1" value="2" />
+            <!-- Process entry form -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="input-pid">Process ID</label>
+                    <input type="text" id="input-pid" placeholder="e.g. P1" maxlength="10" />
                 </div>
+                <div class="form-group">
+                    <label for="input-arrival">Arrival Time</label>
+                    <input type="number" id="input-arrival" placeholder="e.g. 0" min="0" />
+                </div>
+                <div class="form-group">
+                    <label for="input-burst">Burst Time</label>
+                    <input type="number" id="input-burst" placeholder="e.g. 5" min="1" />
+                </div>
+                <div class="form-group" style="flex: 0;">
+                    <label>&nbsp;</label>
+                    <button class="btn-primary" id="btn-add-process" onclick="handleAddProcess()">
+                        + Add Process
+                    </button>
+                </div>
+            </div>
 
-                <div class="sjf-mode-wrapper">
-                    <div class="sjf-mode-row">
-                        <span class="mode-label">SJF Mode:</span>
-                        <div class="mode-toggle" role="group" aria-label="SJF scheduling mode">
-                            <input type="radio" id="mode-non-preemptive" name="sjf-mode" value="non-preemptive" />
-                            <label for="mode-non-preemptive">Non-Preemptive</label>
+            <!-- Error message for process fields -->
+            <div class="msg-error" id="error-process"></div>
 
-                            <input type="radio" id="mode-preemptive" name="sjf-mode" value="preemptive" checked />
-                            <label for="mode-preemptive">Preemptive (SRTF)</label>
+            <!-- List of added processes -->
+            <div id="process-list"></div>
+
+            <!-- LOAD TEST SCENARIOS  -->
+            <!-- butons for loading test cases data easily -->
+            <div
+                style="margin-bottom: 1.5rem; background: #e8f0fe; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--color-primary);">
+                <p style="margin-bottom: 0.5rem; font-size: 0.9rem; font-weight: 600; color: var(--color-primary-dk);">
+                    Ready test cases</p>
+                <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                    <button class="btn-reset" onclick="loadScenario1()"
+                        style="background: #fff; border-color: var(--color-primary); color: var(--color-primary);">Scenario
+                        1</button>
+                    <button class="btn-reset" onclick="loadScenario2()"
+                        style="background: #fff; border-color: var(--color-primary); color: var(--color-primary);">Scenario
+                        2</button>
+                    <button class="btn-reset" onclick="loadScenario3()"
+                        style="background: #fff; border-color: var(--color-danger); color: var(--color-danger);">Scenario
+                        3 (Validation)</button>
+                </div>
+            </div>
+
+            <!-- Simulation Controls (Updated Layout) -->
+            <div class="simulation-controls-container">
+
+                <!-- Top Row: Quantum (Left) and SJF Mode (Right) -->
+                <div class="settings-row">
+                    <div class="form-group quantum-group">
+                        <label for="input-quantum">RR Quantum (≥ 1)</label>
+                        <input type="number" id="input-quantum" placeholder="e.g. 2" min="1" value="2" />
+                    </div>
+
+                    <div class="sjf-mode-wrapper">
+                        <div class="sjf-mode-row">
+                            <span class="mode-label">SJF Mode:</span>
+                            <div class="mode-toggle" role="group" aria-label="SJF scheduling mode">
+                                <input type="radio" id="mode-non-preemptive" name="sjf-mode" value="non-preemptive" />
+                                <label for="mode-non-preemptive">Non-Preemptive</label>
+
+                                <input type="radio" id="mode-preemptive" name="sjf-mode" value="preemptive" checked />
+                                <label for="mode-preemptive">Preemptive (SRTF)</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Bottom Row: Buttons -->
-            <div class="actions-row">
-                <button class="btn-run" id="btn-run" onclick="handleRunSimulation()">
-                    ▶ Run Simulation
-                </button>
-                <button class="btn-reset" id="btn-reset" onclick="handleReset()">
-                    ↺ Reset
-                </button>
-            </div>
-            
-        </div>
-
-        <!-- Error message for run validation -->
-        <div class="msg-error" id="error-run"></div>
-    </div>
-
-    <!--RESULTS SECTION  -->
-   <div id="results-section" class="hidden">
-
-        <div class="card">
-            <h2> Round Robin</h2>
-            <div class="result-section rr">
-                <h3>Quantum = <span id="rr-quantum-label">2</span></h3>
-                <div id="gantt-rr"></div>
-                
-                <div id="rr-queue-view" style="background: #f9f9f9; padding: 10px; margin: 15px 0; border-left: 4px solid #4e79a7; font-family: monospace; max-height: 150px; overflow-y: auto;">
-                    <h4 style="margin-top: 0; color: #333;">Ready Queue Log </h4>
-                    <ul id="rr-queue-list" style="list-style-type: none; padding-left: 0; margin: 0; line-height: 1.6;"></ul>
+                <!-- Bottom Row: Buttons -->
+                <div class="actions-row">
+                    <button class="btn-run" id="btn-run" onclick="handleRunSimulation()">
+                        ▶ Run Simulation
+                    </button>
+                    <button class="btn-reset" id="btn-reset" onclick="handleReset()">
+                        ↺ Reset
+                    </button>
                 </div>
 
-                <div id="table-rr"></div>
             </div>
+
+            <!-- Error message for run validation -->
+            <div class="msg-error" id="error-run"></div>
         </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <h2><span id="sjf-result-title">Preemptive SJF (SRTF)</span></h2>
-            <div class="result-section sjf">
-                <h3 id="sjf-mode-heading">Mode: Preemptive (SRTF)</h3>
-                
-                <div id="gantt-sjf"></div>
-                <div id="table-sjf"></div>
+        <!--RESULTS SECTION  -->
+        <div id="results-section" class="hidden">
+
+            <div class="card">
+                <h2> Round Robin</h2>
+                <div class="result-section rr">
+                    <h3>Quantum = <span id="rr-quantum-label">2</span></h3>
+                    <div id="gantt-rr"></div>
+
+                    <div id="rr-queue-view"
+                        style="background: #f9f9f9; padding: 10px; margin: 15px 0; border-left: 4px solid #4e79a7; font-family: monospace; max-height: 150px; overflow-y: auto;">
+                        <h4 style="margin-top: 0; color: #333;">Ready Queue Log </h4>
+                        <ul id="rr-queue-list"
+                            style="list-style-type: none; padding-left: 0; margin: 0; line-height: 1.6;"></ul>
+                    </div>
+
+                    <div id="table-rr"></div>
+                </div>
             </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <h2><span id="sjf-result-title">Preemptive SJF (SRTF)</span></h2>
+                <div class="result-section sjf">
+                    <h3 id="sjf-mode-heading">Mode: Preemptive (SRTF)</h3>
+
+                    <div id="gantt-sjf"></div>
+                    <div id="table-sjf"></div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 20px;">
+                <h2> Head-to-Head Comparison</h2>
+                <div id="table-comparison"></div>
+
+                <div id="conclusion-box">
+                    <h3>Conclusion</h3>
+                    <p id="conclusion-text"></p>
+                </div>
+            </div>
+
         </div>
 
-        <div class="card" style="margin-top: 20px;">
-            <h2> Head-to-Head Comparison</h2>
-            <div id="table-comparison"></div>
+    </main>
 
-            <div id="conclusion-box">
-                <h3>Conclusion</h3>
-                <p id="conclusion-text"></p>
-            </div>
-        </div>
+    <footer>
+        CPU Scheduling Simulator
+    </footer>
 
-    </div>
+    <!--JAVASCRIPT FILES  -->
+    <script src="src/model/process.js"></script>
+    <script src="src/util/validate.js"></script>
+    <script src="src/scheduler/roundRobin.js"></script>
+    <script src="src/scheduler/sjf.js"></script>
+    <script src="src/metrics/metrics.js"></script>
+    <script src="src/gui/gantt.js"></script>
+    <script src="src/gui/table.js"></script>
 
-</main>
+    <!-- APP CONTROLLER  -->
+    <script>
+        var processList = [];
 
-<footer>
-    CPU Scheduling Simulator
-</footer>
+        function handleAddProcess() {
+            showError('error-process', '');
 
-<!--JAVASCRIPT FILES  -->
-<script src="src/model/process.js"></script>
-<script src="src/util/validate.js"></script>
-<script src="src/scheduler/roundRobin.js"></script>
-<script src="src/scheduler/sjf.js"></script>
-<script src="src/metrics/metrics.js"></script>
-<script src="src/gui/gantt.js"></script>
-<script src="src/gui/table.js"></script>
+            var idVal = document.getElementById('input-pid').value.trim();
+            var arrivalVal = document.getElementById('input-arrival').value;
+            var burstVal = document.getElementById('input-burst').value;
 
-<!-- APP CONTROLLER  -->
-<script>
-    var processList = [];
+            var check = validateProcessInput(idVal, arrivalVal, burstVal, processList);
+            if (!check.valid) {
+                showError('error-process', check.message);
+                return;
+            }
 
-    function handleAddProcess() {
-        showError('error-process', '');
+            var newProc = createProcess(idVal, Number(arrivalVal), Number(burstVal));
+            processList.push(newProc);
 
-        var idVal      = document.getElementById('input-pid').value.trim();
-        var arrivalVal = document.getElementById('input-arrival').value;
-        var burstVal   = document.getElementById('input-burst').value;
+            renderProcessList();
 
-        var check = validateProcessInput(idVal, arrivalVal, burstVal, processList);
-        if (!check.valid) {
-            showError('error-process', check.message);
-            return;
+            document.getElementById('input-pid').value = '';
+            document.getElementById('input-arrival').value = '';
+            document.getElementById('input-burst').value = '';
+            document.getElementById('input-pid').focus();
         }
 
-        var newProc = createProcess(idVal, Number(arrivalVal), Number(burstVal));
-        processList.push(newProc);
+        function renderProcessList() {
+            var container = document.getElementById('process-list');
+            container.innerHTML = '';
 
-        renderProcessList();
+            if (processList.length === 0) {
+                return;
+            }
 
-        document.getElementById('input-pid').value     = '';
-        document.getElementById('input-arrival').value = '';
-        document.getElementById('input-burst').value   = '';
-        document.getElementById('input-pid').focus();
-    }
+            for (var i = 0; i < processList.length; i++) {
+                var p = processList[i];
 
-    function renderProcessList() {
-        var container = document.getElementById('process-list');
-        container.innerHTML = '';
+                var tag = document.createElement('div');
+                tag.className = 'process-tag';
 
-        if (processList.length === 0) {
-            return;
+                var spanId = document.createElement('span');
+                spanId.className = 'tag-id';
+                spanId.textContent = p.id;
+
+                var spanDetails = document.createElement('span');
+                spanDetails.className = 'tag-details';
+                spanDetails.textContent = 'Arrival: ' + p.arrivalTime + '  |  Burst: ' + p.burstTime;
+
+                var removeBtn = (function (index) {
+                    var btn = document.createElement('button');
+                    btn.className = 'btn-remove';
+                    btn.textContent = 'Remove';
+                    btn.onclick = function () { removeProcess(index); };
+                    return btn;
+                })(i);
+
+                tag.appendChild(spanId);
+                tag.appendChild(spanDetails);
+                tag.appendChild(removeBtn);
+                container.appendChild(tag);
+            }
         }
 
-        for (var i = 0; i < processList.length; i++) {
-            var p = processList[i];
-
-            var tag = document.createElement('div');
-            tag.className = 'process-tag';
-
-            var spanId = document.createElement('span');
-            spanId.className   = 'tag-id';
-            spanId.textContent = p.id;
-
-            var spanDetails = document.createElement('span');
-            spanDetails.className   = 'tag-details';
-            spanDetails.textContent = 'Arrival: ' + p.arrivalTime + '  |  Burst: ' + p.burstTime;
-
-            var removeBtn = (function(index) {
-                var btn = document.createElement('button');
-                btn.className   = 'btn-remove';
-                btn.textContent = 'Remove';
-                btn.onclick     = function() { removeProcess(index); };
-                return btn;
-            })(i);
-
-            tag.appendChild(spanId);
-            tag.appendChild(spanDetails);
-            tag.appendChild(removeBtn);
-            container.appendChild(tag);
-        }
-    }
-
-    function removeProcess(index) {
-        processList.splice(index, 1);
-        renderProcessList();
-    }
-
-    function getSelectedSjfMode() {
-        var radios = document.getElementsByName('sjf-mode');
-        for (var i = 0; i < radios.length; i++) {
-            if (radios[i].checked) return radios[i].value;
-        }
-        return 'preemptive';
-    }
-
-    function handleRunSimulation() {
-        showError('error-run', '');
-
-        var quantumVal = document.getElementById('input-quantum').value;
-
-        var check = validateRunInputs(processList, quantumVal);
-        if (!check.valid) {
-            showError('error-run', check.message);
-            return;
+        function removeProcess(index) {
+            processList.splice(index, 1);
+            renderProcessList();
         }
 
-        var quantum = Number(quantumVal);
-        document.getElementById('rr-quantum-label').textContent = quantum;
-
-        var sjfMode = getSelectedSjfMode();
-
-        if (sjfMode === 'preemptive') {
-            document.getElementById('sjf-result-title').textContent = 'Preemptive SJF (SRTF)';
-            document.getElementById('sjf-mode-heading').textContent  = 'Mode: Preemptive (SRTF)';
-        } else {
-            document.getElementById('sjf-result-title').textContent = 'Non-Preemptive SJF';
-            document.getElementById('sjf-mode-heading').textContent  = 'Mode: Non-Preemptive';
+        function getSelectedSjfMode() {
+            var radios = document.getElementsByName('sjf-mode');
+            for (var i = 0; i < radios.length; i++) {
+                if (radios[i].checked) return radios[i].value;
+            }
+            return 'preemptive';
         }
 
-        var rrResult  = runRoundRobin(processList, quantum);
-        
-        var sjfResult = (sjfMode === 'preemptive') 
-            ? runSJF(processList) 
-            : runSJFNonPreemptive(processList);
+        function handleRunSimulation() {
+            showError('error-run', '');
 
-        var rrMetrics  = calculateMetrics(processList, rrResult.completed);
-        var sjfMetrics = calculateMetrics(processList, sjfResult.completed);
+            var quantumVal = document.getElementById('input-quantum').value;
 
-        drawGanttChart('gantt-rr',  rrResult.timeline);
-        drawGanttChart('gantt-sjf', sjfResult.timeline);
+            var check = validateRunInputs(processList, quantumVal);
+            if (!check.valid) {
+                showError('error-run', check.message);
+                return;
+            }
 
-        var queueListEl = document.getElementById('rr-queue-list');
-        queueListEl.innerHTML = ''; 
-        for (var L = 0; L < rrResult.queueLog.length; L++) {
-            var li = document.createElement('li');
-            li.textContent = rrResult.queueLog[L];
-            queueListEl.appendChild(li);
+            var quantum = Number(quantumVal);
+            document.getElementById('rr-quantum-label').textContent = quantum;
+
+            var sjfMode = getSelectedSjfMode();
+
+            if (sjfMode === 'preemptive') {
+                document.getElementById('sjf-result-title').textContent = 'Preemptive SJF (SRTF)';
+                document.getElementById('sjf-mode-heading').textContent = 'Mode: Preemptive (SRTF)';
+            } else {
+                document.getElementById('sjf-result-title').textContent = 'Non-Preemptive SJF';
+                document.getElementById('sjf-mode-heading').textContent = 'Mode: Non-Preemptive';
+            }
+
+            var rrResult = runRoundRobin(processList, quantum);
+
+            var sjfResult = (sjfMode === 'preemptive')
+                ? runSJF(processList)
+                : runSJFNonPreemptive(processList);
+
+            var rrMetrics = calculateMetrics(processList, rrResult.completed);
+            var sjfMetrics = calculateMetrics(processList, sjfResult.completed);
+
+            drawGanttChart('gantt-rr', rrResult.timeline);
+            drawGanttChart('gantt-sjf', sjfResult.timeline);
+
+            var queueListEl = document.getElementById('rr-queue-list');
+            queueListEl.innerHTML = '';
+            for (var L = 0; L < rrResult.queueLog.length; L++) {
+                var li = document.createElement('li');
+                li.textContent = rrResult.queueLog[L];
+                queueListEl.appendChild(li);
+            }
+
+            renderResultsTable('table-rr', rrMetrics);
+            renderResultsTable('table-sjf', sjfMetrics);
+
+            renderComparisonTable('table-comparison', rrMetrics, sjfMetrics);
+
+            document.getElementById('conclusion-text').innerHTML =
+                buildConclusion(rrMetrics, sjfMetrics);
+
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        renderResultsTable('table-rr',  rrMetrics);
-        renderResultsTable('table-sjf', sjfMetrics);
+        function buildConclusion(rrMetrics, sjfMetrics) {
+            var quantum = document.getElementById('rr-quantum-label').textContent;
+            var html = '<ul style="margin: 0; padding-left: 20px; line-height: 1.8;">';
 
-        renderComparisonTable('table-comparison', rrMetrics, sjfMetrics);
+            if (rrMetrics.avgWT < sjfMetrics.avgWT) {
+                html += '<li><strong>Speed:</strong> Round Robin was faster in this case (Wait Time: ' + rrMetrics.avgWT + ' vs ' + sjfMetrics.avgWT + ').</li>';
+            } else if (sjfMetrics.avgWT < rrMetrics.avgWT) {
+                html += '<li><strong>Speed:</strong> SJF was faster (Wait Time: ' + sjfMetrics.avgWT + ' vs ' + rrMetrics.avgWT + ') because it finishes short jobs first.</li>';
+            } else {
+                html += '<li><strong>Speed:</strong> Both algorithms had the exact same average waiting time (' + rrMetrics.avgWT + ').</li>';
+            }
 
-        document.getElementById('conclusion-text').innerHTML =
-            buildConclusion(rrMetrics, sjfMetrics);
+            html += '<li><strong>Fairness:</strong> Round Robin is highly fair. Every process gets an equal turn (Quantum = ' + quantum + '), preventing any single job from taking over the CPU.</li>';
+            html += '<li><strong>Starvation Risk:</strong> SJF can leave long jobs waiting forever if short jobs keep arriving. Round Robin completely prevents this issue.</li>';
 
-        document.getElementById('results-section').classList.remove('hidden');
-        document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
-    }
+            var winner = (rrMetrics.avgWT <= sjfMetrics.avgWT) ? 'Round Robin' : 'SJF';
+            html += '<li><strong>Recommendation:</strong> Use <strong>' + winner + '</strong> for maximum speed, but choose <strong>Round Robin</strong> if you need a balanced and fair system.</li>';
 
-    function buildConclusion(rrMetrics, sjfMetrics) {
-        var quantum = document.getElementById('rr-quantum-label').textContent;
-        var html = '<ul style="margin: 0; padding-left: 20px; line-height: 1.8;">';
-
-        if (rrMetrics.avgWT < sjfMetrics.avgWT) {
-            html += '<li><strong>Speed:</strong> Round Robin was faster in this case (Wait Time: ' + rrMetrics.avgWT + ' vs ' + sjfMetrics.avgWT + ').</li>';
-        } else if (sjfMetrics.avgWT < rrMetrics.avgWT) {
-            html += '<li><strong>Speed:</strong> SJF was faster (Wait Time: ' + sjfMetrics.avgWT + ' vs ' + rrMetrics.avgWT + ') because it finishes short jobs first.</li>';
-        } else {
-            html += '<li><strong>Speed:</strong> Both algorithms had the exact same average waiting time (' + rrMetrics.avgWT + ').</li>';
+            html += '</ul>';
+            return html;
         }
 
-        html += '<li><strong>Fairness:</strong> Round Robin is highly fair. Every process gets an equal turn (Quantum = ' + quantum + '), preventing any single job from taking over the CPU.</li>';
-        html += '<li><strong>Starvation Risk:</strong> SJF can leave long jobs waiting forever if short jobs keep arriving. Round Robin completely prevents this issue.</li>';
+        function handleReset() {
+            processList = [];
+            renderProcessList();
+            showError('error-process', '');
+            showError('error-run', '');
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('rr-queue-list').innerHTML = '';
+            document.getElementById('input-pid').value = '';
+            document.getElementById('input-arrival').value = '';
+            document.getElementById('input-burst').value = '';
+            document.getElementById('input-quantum').value = '2';
 
-        var winner = (rrMetrics.avgWT <= sjfMetrics.avgWT) ? 'Round Robin' : 'SJF';
-        html += '<li><strong>Recommendation:</strong> Use <strong>' + winner + '</strong> for maximum speed, but choose <strong>Round Robin</strong> if you need a balanced and fair system.</li>';
-
-        html += '</ul>';
-        return html;
-    }
-
-    function handleReset() {
-        processList = [];
-        renderProcessList();
-        showError('error-process', '');
-        showError('error-run', '');
-        document.getElementById('results-section').classList.add('hidden');
-        document.getElementById('rr-queue-list').innerHTML = ''; 
-        document.getElementById('input-pid').value     = '';
-        document.getElementById('input-arrival').value = '';
-        document.getElementById('input-burst').value   = '';
-        document.getElementById('input-quantum').value = '2';
-        
-        document.getElementById('mode-preemptive').checked = true;
-    }
-
-    function showError(elementId, message) {
-        var el = document.getElementById(elementId);
-        if (!el) { return; }
-        if (message) {
-            el.textContent = '⚠ ' + message;
-            el.classList.add('visible');
-        } else {
-            el.textContent = '';
-            el.classList.remove('visible');
+            document.getElementById('mode-preemptive').checked = true;
         }
-    }
 
-    //  TEST SCENARIOS LOGIC 
+        function showError(elementId, message) {
+            var el = document.getElementById(elementId);
+            if (!el) { return; }
+            if (message) {
+                el.textContent = '⚠ ' + message;
+                el.classList.add('visible');
+            } else {
+                el.textContent = '';
+                el.classList.remove('visible');
+            }
+        }
 
-    // This function loads the first test case :normal case
-    function loadScenario1() {
-        handleReset(); // Clear any existing data first
-        document.getElementById('input-quantum').value = '2'; // Default RR Quantum
-        document.getElementById('mode-non-preemptive').checked = true; // Selected Non-Preemptive
-        
-        // Add predefined processes for Scenario 1
-        processList.push(createProcess('P1', 0, 5));
-        processList.push(createProcess('P2', 1, 3));
-        processList.push(createProcess('P3', 2, 8));
-        
-        renderProcessList(); // Update the UI to show the added processes
-    }
+        //  TEST SCENARIOS LOGIC 
 
-    // This function loads the second test case :behavior-revealing
-    function loadScenario2() {
-        handleReset(); // Clear any existing data first
-        document.getElementById('input-quantum').value = '2'; // Default RR Quantum
-        document.getElementById('mode-preemptive').checked = true; // Selected Preemptive
-        
-        // Add predefined processes for Scenario 2
-        processList.push(createProcess('P1', 0, 20));
-        processList.push(createProcess('P2', 1, 2));
-        processList.push(createProcess('P3', 2, 3));
-        
-        renderProcessList(); // Update the UI to show the added processes
-    }
+        // This function loads the first test case :normal case
+        function loadScenario1() {
+            handleReset(); // Clear any existing data first
+            document.getElementById('input-quantum').value = '2'; // Default RR Quantum
+            document.getElementById('mode-non-preemptive').checked = true; // Selected Non-Preemptive
 
-    // test scenario 3:input validation 
-    function loadScenario3() {
-        handleReset(); // Clear any existing data first
-        
-        // Fill inputs with invalid data (Burst time = 0)
-        // We do not push to the list; we leave it for the user to click "Add Process" 
-        // to physically show the error appearing during the viva!
-        document.getElementById('input-pid').value = 'P1';
-        document.getElementById('input-arrival').value = '0'; 
-        document.getElementById('input-burst').value = '0';    
-    }
-    
+            // Add predefined processes for Scenario 1
+            processList.push(createProcess('P1', 0, 5));
+            processList.push(createProcess('P2', 1, 3));
+            processList.push(createProcess('P3', 2, 8));
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var fields = ['input-pid', 'input-arrival', 'input-burst'];
-        for (var i = 0; i < fields.length; i++) {
-            document.getElementById(fields[i]).addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') { handleAddProcess(); }
+            renderProcessList(); // Update the UI to show the added processes
+        }
+
+        // This function loads the second test case :behavior-revealing
+        function loadScenario2() {
+            handleReset(); // Clear any existing data first
+            document.getElementById('input-quantum').value = '2'; // Default RR Quantum
+            document.getElementById('mode-preemptive').checked = true; // Selected Preemptive
+
+            // Add predefined processes for Scenario 2
+            processList.push(createProcess('P1', 0, 20));
+            processList.push(createProcess('P2', 1, 2));
+            processList.push(createProcess('P3', 2, 3));
+
+            renderProcessList(); // Update the UI to show the added processes
+        }
+
+        // test scenario 3:input validation 
+        function loadScenario3() {
+            handleReset(); // Clear any existing data first
+
+            // Fill inputs with invalid data (Burst time = 0)
+            // We do not push to the list; we leave it for the user to click "Add Process" 
+            // to physically show the error appearing during the viva!
+            document.getElementById('input-pid').value = 'P1';
+            document.getElementById('input-arrival').value = '0';
+            document.getElementById('input-burst').value = '0';
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var fields = ['input-pid', 'input-arrival', 'input-burst'];
+            for (var i = 0; i < fields.length; i++) {
+                document.getElementById(fields[i]).addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') { handleAddProcess(); }
+                });
+            }
+            document.getElementById('input-quantum').addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') { handleRunSimulation(); }
             });
-        }
-        document.getElementById('input-quantum').addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { handleRunSimulation(); }
         });
-    });
-</script>
+    </script>
 </body>
+
 </html>
