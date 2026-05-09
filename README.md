@@ -11,6 +11,9 @@
 - **Queue Management:** Manage how the Ready Queue handles the Time Quantum.
 - **Algorithms:** Write the JavaScript code for both versions of the SJF algorithm (Preemptive & Non-Preemptive).
 - **Context Switching:** Ensure the logic correctly switches between interrupting a process (Preemptive) and letting it finish (Non-Preemptive) based on the user's choice.
+- **Design:** Build and style the web page (HTML/CSS).
+- **Features:** Build the new SJF Mode Toggle switch (Preemptive vs Non-Preemptive).
+- **Validation:** Write the validation code to block wrong inputs like zero burst times or missing IDs.
 
 ## 📋 Requirements
 - **Calculations:**
@@ -27,3 +30,10 @@
 - **Preemptive SJF (SRTF):** If a new process arrives with a shorter remaining time than the currently running process, the current process is preempted.
 - **Tie-Breaking:** If remaining times are equal, prefer the process that arrived first.
 - **Output:** Produce an array of execution intervals (Gantt chart data) with accurate start and end times.
+- **Aesthetics:** Ensure a modern, responsive, and intuitive interface.
+- **Toggle Switch:** Must clearly indicate whether SJF is in Preemptive or Non-Preemptive mode.
+- **Validation Rules:**
+  - Process ID must be unique.
+  - Arrival Time must be $\ge$ 0.
+  - Burst Time must be $>$ 0.
+  - Display user-friendly error messages when validation fails.
