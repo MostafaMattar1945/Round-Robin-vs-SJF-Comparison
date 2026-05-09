@@ -9,6 +9,8 @@
 - **Visualization:** Generate the dynamic, colored Gantt charts for the results.
 - **Algorithm:** Write the JavaScript code for the Round Robin algorithm.
 - **Queue Management:** Manage how the Ready Queue handles the Time Quantum.
+- **Algorithms:** Write the JavaScript code for both versions of the SJF algorithm (Preemptive & Non-Preemptive).
+- **Context Switching:** Ensure the logic correctly switches between interrupting a process (Preemptive) and letting it finish (Non-Preemptive) based on the user's choice.
 
 ## 📋 Requirements
 - **Calculations:**
@@ -21,4 +23,7 @@
 - **Comparison Table:** Clearly present which algorithm performs better based on the average metrics.
 - **Quantum Management:** Accurately subtract the quantum from burst time and preempt the process if it's not finished.
 - **Queue Logic:** New arrivals must be placed in the queue appropriately, and preempted processes must go to the back of the queue.
+- **Non-Preemptive SJF:** Once a process starts, it runs to completion even if a shorter job arrives.
+- **Preemptive SJF (SRTF):** If a new process arrives with a shorter remaining time than the currently running process, the current process is preempted.
+- **Tie-Breaking:** If remaining times are equal, prefer the process that arrived first.
 - **Output:** Produce an array of execution intervals (Gantt chart data) with accurate start and end times.
