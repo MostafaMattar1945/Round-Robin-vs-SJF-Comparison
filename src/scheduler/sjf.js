@@ -1,18 +1,10 @@
-/**
- * sjf.js
- * ------
- * Implements BOTH versions of the Shortest Job First (SJF) scheduling algorithm:
- *   1. Non-Preemptive SJF
- *   2. Preemptive SJF (also known as Shortest Remaining Time First - SRTF)
- */
 
-/**
- * runSJFNonPreemptive
- * Runs the Standard (Non-Preemptive) SJF scheduling algorithm.
- * Once a process gets the CPU, it runs until its entire burst time is finished.
- */
+  // Shortest Job First (SJF) scheduling algorithm:
+ 
+ 
 function runSJFNonPreemptive(processes) {
-    var procs = [];
+    var procs = []; // Create copy so original data is not modified
+    
     for (var i = 0; i < processes.length; i++) {
         procs.push({
             id:            processes[i].id,
@@ -25,9 +17,9 @@ function runSJFNonPreemptive(processes) {
         });
     }
 
-    var timeline = [];
-    var time     = 0;
-    var done     = 0;
+    var timeline = [];   // Stores execution order for Gantt Chart
+    var time     = 0;   // Current CPU time
+    var done     = 0;   // Number of finished processes
 
     while (done < procs.length) {
         // Collect all arrived, unfinished processes
@@ -51,7 +43,7 @@ function runSJFNonPreemptive(processes) {
         }
 
         // Pick shortest burst; tie-break by original index
-        var bestIdx = ready[0];
+        var bestIdx = ready[0];   // Assume first ready process is shortest
         for (var k = 1; k < ready.length; k++) {
             var candidate = procs[ready[k]];
             var current   = procs[bestIdx];
@@ -77,21 +69,9 @@ function runSJFNonPreemptive(processes) {
 }
 
 
-/**
- * runSJF
- * Runs the Preemptive SJF (SRTF) scheduling algorithm.
- *
- * How Preemptive SJF (SRTF) works:
- *   - At every time unit, the CPU picks the process with the LEAST remaining burst time.
- *   - If a new process arrives with a shorter remaining time than the currently running
- *     process, the CPU immediately switches to the new process (preemption).
- *   - Ties are broken by the original order the process was given to us.
- *
- * @param {Array} processes - Array of process objects {id, arrivalTime, burstTime}
- * @returns {object} Result containing:
- *   - timeline : Array of {processId, start, end} segments for the Gantt chart
- *   - completed: Array with firstRunTime and finishTime for each process
- */
+ // Runs the Preemptive SJF (SRTF) scheduling algorithm.
+
+
 function runSJF(processes) {
     // Make a working copy so we don't change the caller's data
     var procs = [];
