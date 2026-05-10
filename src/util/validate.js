@@ -1,8 +1,4 @@
-/**
- * validate.js
- * -----------
- * Contains all input validation functions for the simulator.
- *
+/*
  * Rules enforced:
  *   - No field may be empty
  *   - Arrival Time must be a non-negative integer (>= 0)
@@ -10,22 +6,6 @@
  *   - Process IDs must be unique within the list
  *   - Quantum must be an integer >= 1
  *   - At least one process must be added before running
- *
- * This file exports TWO functions:
- *   - validateProcessInput(id, arrivalStr, burstStr, existingProcesses)
- *   - validateRunInputs(processList, quantumStr)
- */
-
-/**
- * validateProcessInput
- * Checks the fields for a single new process before adding it to the list.
- *
- * @param {string} id                - The process ID entered by the user
- * @param {string} arrivalStr        - The arrival time as a raw string (from input)
- * @param {string} burstStr          - The burst time as a raw string
- * @param {Array}  existingProcesses - Current list of already-added processes
- * @returns {object} { valid: true } on success,
- *                   { valid: false, message: "..." } on failure
  */
 function validateProcessInput(id, arrivalStr, burstStr, existingProcesses) {
     // Check for empty fields
@@ -81,14 +61,9 @@ function validateProcessInput(id, arrivalStr, burstStr, existingProcesses) {
     return { valid: true };
 }
 
-/**
+/*
  * validateRunInputs
  * Checks whether the simulation can be started.
- *
- * @param {Array}  processList - The list of processes currently added
- * @param {string} quantumStr  - The quantum value as a raw string
- * @returns {object} { valid: true } on success,
- *                   { valid: false, message: "..." } on failure
  */
 function validateRunInputs(processList, quantumStr) {
     // Must have at least one process
