@@ -64,7 +64,7 @@ function runRoundRobin(processes, quantum) {
             }
         }
 
-        // --- NEW CODE: Record the queue state before picking a process ---
+        // Record the queue state before picking a process ---
         var queueNames = [];
         for (var q = 0; q < queue.length; q++) {
             queueNames.push(remaining[queue[q]].id);
@@ -114,6 +114,6 @@ function runRoundRobin(processes, quantum) {
     return {
         timeline:  timeline,
         completed: remaining,
-        queueLog:  queueLog // <-- NEW CODE
+        queueLog:  queueLog 
     };
 }
