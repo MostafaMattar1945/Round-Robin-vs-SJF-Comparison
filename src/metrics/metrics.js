@@ -1,29 +1,8 @@
-/**
- * metrics.js
- * ----------
- * Calculates performance metrics for each process after a scheduling run.
- *
+/*
  * Definitions:
  *   Turnaround Time (TAT) = Finish Time  - Arrival Time
  *   Waiting Time    (WT)  = TAT          - Burst Time
  *   Response Time   (RT)  = First Run    - Arrival Time
- *
- * This file exports ONE function: calculateMetrics(processes, completedList)
- */
-
-/**
- * calculateMetrics
- * Computes WT, TAT, and RT for every process, and returns averages.
- *
- * @param {Array} processes     - Original process list {id, arrivalTime, burstTime}
- * @param {Array} completedList - Output from the scheduler, each item has:
- *                                  id, arrivalTime, burstTime,
- *                                  firstRunTime, finishTime
- * @returns {object} An object with:
- *   - rows    : Array of per-process metrics {id, arrivalTime, burstTime, wt, tat, rt}
- *   - avgWT   : Average waiting time (rounded to 2 decimal places)
- *   - avgTAT  : Average turnaround time
- *   - avgRT   : Average response time
  */
 function calculateMetrics(processes, completedList) {
     var rows = [];
