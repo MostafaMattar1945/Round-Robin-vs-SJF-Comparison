@@ -1,16 +1,4 @@
-/**
- * roundRobin.js
- * -------------
- * Implements the Round Robin (RR) CPU scheduling algorithm.
- *
- * How Round Robin works:
- *   - Each process gets a fixed slice of CPU time called the "quantum".
- *   - If a process hasn't finished in one quantum, it goes to the back of the queue.
- *   - New arrivals are added to the queue in arrival order.
- *   - This repeats until all processes are done.
- *
- * This file exports ONE function: runRoundRobin(processes, quantum)
- */
+
 
 function runRoundRobin(processes, quantum) {
     // Make a deep copy so we don't modify the original list
