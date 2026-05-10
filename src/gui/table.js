@@ -1,21 +1,7 @@
-/**
- * table.js
- * --------
- * Renders the results table and comparison table to the page.
- *
- * This file exports TWO functions:
- *   - renderResultsTable(containerId, metricsResult)
- *   - renderComparisonTable(containerId, rrMetrics, sjfMetrics)
- */
 
-/**
- * renderResultsTable
- * Builds an HTML table showing per-process metrics and an averages summary row.
- *
- * @param {string} containerId    - id of the HTML element to render into
- * @param {object} metricsResult  - Output from calculateMetrics():
- *                                    { rows: [...], avgWT, avgTAT, avgRT }
- */
+
+  //Renders the results table and comparison table to the page.
+
 function renderResultsTable(containerId, metricsResult) {
     var container = document.getElementById(containerId);
     if (!container) { return; }
@@ -87,10 +73,6 @@ function renderResultsTable(containerId, metricsResult) {
  * renderComparisonTable
  * Builds a side-by-side comparison table for RR vs SJF metrics.
  * Also highlights the winner (lower value = better) for each metric.
- *
- * @param {string} containerId - id of the HTML element to render into
- * @param {object} rrMetrics   - { avgWT, avgTAT, avgRT } for Round Robin
- * @param {object} sjfMetrics  - { avgWT, avgTAT, avgRT } for SJF
  */
 function renderComparisonTable(containerId, rrMetrics, sjfMetrics) {
     var container = document.getElementById(containerId);
