@@ -1,29 +1,11 @@
-/**
- * gantt.js
- * --------
- * Draws a Gantt chart inside a given HTML container element.
- *
- * A Gantt chart is a horizontal bar showing which process ran at each time unit.
- * Each process gets its own color. Time labels appear below the chart.
- *
- * This file exports ONE function: drawGanttChart(containerId, timeline)
- */
 
-// A palette of background colors — one per process.
-// If there are more than 10 processes, colors will repeat.
 var GANTT_COLORS = [
     '#4e79a7', '#f28e2b', '#e15759', '#76b7b2',
     '#59a14f', '#edc948', '#b07aa1', '#ff9da7',
     '#9c755f', '#bab0ac'
 ];
 
-/**
- * drawGanttChart
- * Renders a horizontal Gantt chart into the specified container element.
- *
- * @param {string} containerId - The id attribute of the HTML element to draw inside
- * @param {Array}  timeline    - Array of segments: [{processId, start, end}, ...]
- */
+
 function drawGanttChart(containerId, timeline) {
     var container = document.getElementById(containerId);
     if (!container) { return; }
