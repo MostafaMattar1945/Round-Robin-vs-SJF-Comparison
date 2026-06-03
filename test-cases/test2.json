@@ -1,0 +1,5 @@
+[
+  {"id": "P1", "arrival": 0, "burst": 20},
+  {"id": "P2", "arrival": 1, "burst": 2},
+  {"id": "P3", "arrival": 2, "burst": 3}
+]
